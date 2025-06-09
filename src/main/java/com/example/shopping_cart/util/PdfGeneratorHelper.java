@@ -19,11 +19,9 @@ public class PdfGeneratorHelper {
     private HexColorHelper hexColorHelper;
 
     private String backgroundImagePath;
-    private Image backgroundImage;
     private float backgroundImageOpacity = 1.0f;
     private BaseColor backgroundColor;
     private String watermarkText;
-    private float watermarkOpacity = 0.2f;
     private int watermarkFontSize = 50;
     private int watermarkAngle = 45;
     private BaseColor watermarkTextColor = BaseColor.GRAY;
@@ -42,7 +40,6 @@ public class PdfGeneratorHelper {
 
     public PdfGeneratorHelper setWatermarkText(String text, float opacity, int fontSize, int angle) {
         this.watermarkText = text;
-        this.watermarkOpacity = opacity;
         this.watermarkFontSize = fontSize;
         this.watermarkAngle = angle;
         return this;
@@ -99,7 +96,7 @@ public class PdfGeneratorHelper {
             File file = new File(backgroundImagePath);
             if (!file.exists()) return false;
 
-            backgroundImage = Image.getInstance(file.getAbsolutePath());
+            Image backgroundImage = Image.getInstance(file.getAbsolutePath());
             backgroundImage.scaleToFit(pageSize.getWidth(), pageSize.getHeight());
 
             float x = (pageSize.getWidth() - backgroundImage.getScaledWidth()) / 2;
@@ -158,7 +155,7 @@ public class PdfGeneratorHelper {
     }
 
     private <T> PdfPTable generateDynamicTable(List<T> dtoList) {
-        Class<?> dtoClass = dtoList.get(0).getClass();
+        Class<?> dtoClass = dtoList.getFirst().getClass();
         Field[] fields = dtoClass.getDeclaredFields();
 
         PdfPTable table = new PdfPTable(fields.length);

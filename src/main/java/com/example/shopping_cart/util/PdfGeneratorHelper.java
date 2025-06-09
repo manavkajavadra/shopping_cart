@@ -202,6 +202,10 @@ public class PdfGeneratorHelper {
         return "Hello";
     }
 
+    public String change(){
+        return "Changed";
+    }
+
 //      Converts camelCase or snake_case field names to Title Case strings for headers.
     private String toTitleCase(String input) {
         return input.replaceAll("([a-z])([A-Z])", "$1 $2")

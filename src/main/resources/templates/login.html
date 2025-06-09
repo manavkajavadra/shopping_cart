@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <label>Enter Name : </label>
+    <input type="text" name="username" id="username"><br>
+    <label>Enter Password : </label>
+    <input type="password" name="password" id="pswd"><br>
+    <input type="button" value="Login" onclick="login()"><br>
+</form>
+<script>
+    function login(){
+        var data = {
+            "adminName" : Vivek,
+            "pswd" : vivek1
+        };
+<!--        var data = {-->
+<!--            "adminName" : document.getElementById("username").value,-->
+<!--            "pswd" : document.getElementById("pswd").value-->
+<!--        };-->
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:8080/admin/login', true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            const response = JSON.parse(xhr.response);
+            console.log(response)
+            if(response.status)
+            {
+                sessionStorage.setItem('token', response.data);
+                window.location='/ui/home/welcome';
+            }
+            else{
+                alert("Invalid");
+            }
+            // Process the response data here
+          } else {
+            console.log("Error")
+            // Handle error
+          }
+        };
+        xhr.send(JSON.stringify(data));
+    }
+</script>
+</body>
+</html>
